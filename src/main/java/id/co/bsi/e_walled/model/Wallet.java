@@ -7,17 +7,18 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "wallets")
-@Data
 public class Wallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
-    @Column(name = "user_id", nullable = false)
-    private BigInteger userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
     @Column(name = "account_number", nullable = false, length = 20, unique = true)
     private String accountNumber;
@@ -41,5 +42,4 @@ public class Wallet {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
 }

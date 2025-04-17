@@ -5,14 +5,19 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table
+@Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String fullname;
     private String email;
     private String password;
     private String avatarUrl; // optional
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Wallet wallet;
 }
