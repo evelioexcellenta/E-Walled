@@ -3,12 +3,10 @@ package id.co.bsi.e_walled.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigInteger;
-
 @Data
 @Entity
 @Table
-public class Auth {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
