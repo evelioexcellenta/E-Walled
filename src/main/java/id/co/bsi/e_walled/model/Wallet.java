@@ -1,12 +1,15 @@
 package id.co.bsi.e_walled.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "wallets")
+@Data
 public class Wallet {
 
     @Id
@@ -39,6 +42,4 @@ public class Wallet {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
-    // ...
 }
