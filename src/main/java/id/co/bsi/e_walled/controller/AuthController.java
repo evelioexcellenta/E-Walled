@@ -6,6 +6,10 @@ import id.co.bsi.e_walled.dto.request.RegisterRequest;
 import id.co.bsi.e_walled.dto.response.LoginResponse;
 import id.co.bsi.e_walled.dto.response.LogoutResponse;
 import id.co.bsi.e_walled.dto.response.RegisterResponse;
+import id.co.bsi.e_walled.model.Auth;
+import id.co.bsi.e_walled.repository.AuthRepository;
+import id.co.bsi.e_walled.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,22 +17,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthController {
+    @Autowired private AuthService authService;
 
     @PostMapping("/api/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setStatus("success");
-        loginResponse.setToken("absdsadsfbgdfdas");
-
+        try {
+            String token = authService.login(loginRequest);
+            loginResponse.setToken(token);
+            loginResponse.setStatus("success");
+        }catch (Exception e) {
+            loginResponse.setStatus("error");
+            loginResponse.setMessage(e.getMessage());
+        }
         return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/api/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequest) {
         RegisterResponse registerResponse = new RegisterResponse();
-        registerResponse.setStatus("success");
-        registerResponse.setMessage("Account Created");
-
+        try{
+            Auth register = this.authService.register(registerRequest);
+            registerResponse.setStatus("success");
+            registerResponse.setMessage("Account registered successfully");
+        } catch (Exception e){
+            registerResponse.setStatus("error");
+            registerResponse.setMessage(e.getMessage());
+        }
         return ResponseEntity.ok(registerResponse);
     }
 

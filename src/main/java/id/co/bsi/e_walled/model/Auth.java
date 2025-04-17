@@ -12,9 +12,9 @@ public class Auth {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String username;
+    private String fullname;
     private String email;
     private String password;
-    private Integer phone;
     private String avatarUrl; // optional
 }
